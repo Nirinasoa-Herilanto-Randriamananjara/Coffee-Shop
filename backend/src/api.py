@@ -92,7 +92,7 @@ def update_drink(payload, drink_id):
         
         return jsonify({
             "success": True,
-            "drinks": drink.long()
+            "drinks": [drink.long()]
         })
         
     except:
@@ -133,11 +133,11 @@ def bad_request(error):
     }), 400
     
 @app.errorhandler(401)
-def unthorized(error):
+def unauthorized(error):
     return jsonify({
         "success": False,
         "error": 401,
-        "message": "unthorized"
+        "message": "unauthorized"
     }), 401
     
 @app.errorhandler(403)
@@ -189,5 +189,5 @@ def auth_error(error):
     return jsonify({
         "success": False,
         "error": error.status_code,
-        "message": error.get('description')
+        "message": error.error.get('description')
     }), error.status_code
